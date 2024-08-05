@@ -1,7 +1,6 @@
 // ignore_for_file: avoid_print, unnecessary_null_comparison
 
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 import 'package:training_book_store/core/functions/routing.dart';
@@ -10,9 +9,7 @@ import 'package:training_book_store/core/utils/app_colors.dart';
 import 'package:training_book_store/core/utils/text_style.dart';
 import 'package:training_book_store/core/widgets/custom_elevated.dart';
 import 'package:training_book_store/core/widgets/custorm_dialogs.dart';
-import 'package:training_book_store/core/widgets/dialogs.dart';
 import 'package:training_book_store/features/cart/presentation/view_model/cart_cubit.dart';
-import 'package:training_book_store/features/cart/presentation/view_model/cart_states.dart';
 import 'package:training_book_store/features/home/presentation/view_model/product_cubit.dart';
 import 'package:training_book_store/features/home/presentation/view_model/product_states.dart';
 import 'package:training_book_store/features/wishlist/presentation/view_model/wishlist_cubit.dart';

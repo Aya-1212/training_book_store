@@ -6,10 +6,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 import 'package:training_book_store/core/functions/routing.dart';
 import 'package:training_book_store/core/services/app_local_storage.dart';
-import 'package:training_book_store/core/services/notification_services.dart';
 import 'package:training_book_store/core/utils/app_colors.dart';
 import 'package:training_book_store/core/utils/text_style.dart';
-import 'package:training_book_store/core/widgets/navigation_bar_view.dart';
 import 'package:training_book_store/features/home/data/category_list.dart';
 import 'package:training_book_store/features/home/data/model/slider/slider_model.dart';
 import 'package:training_book_store/features/home/presentation/view_model/product_cubit.dart';
@@ -19,7 +17,6 @@ import 'package:training_book_store/features/home/presentation/widgets/home_widg
 import 'package:training_book_store/features/home/presentation/widgets/home_widgets/new_arrivals.dart';
 import 'package:training_book_store/features/profile/presentation/views/drawer_settings/change_password_view.dart';
 import 'package:training_book_store/features/profile/presentation/views/drawer_settings/send_message_screen.dart';
-import 'package:training_book_store/features/profile/presentation/views/profile_view.dart';
 import 'package:training_book_store/features/profile/presentation/views/update_profile_screen.dart';
 
 class HomeView extends StatefulWidget {
