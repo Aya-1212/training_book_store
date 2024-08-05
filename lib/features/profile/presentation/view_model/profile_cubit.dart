@@ -16,10 +16,13 @@ class ProfileCubit extends Cubit<ProfileStates> {
 
   ProfileCubit object(context) => BlocProvider.of(context);
 
+//show profile
   ProfileModel? showProfile;
+//change password
   var passwordController = TextEditingController();
   var newPasswordController = TextEditingController();
   var passwordConfirmController = TextEditingController();
+//update profile
   var nameController = TextEditingController();
   var addressController = TextEditingController();
   var phoneController = TextEditingController();
@@ -39,25 +42,26 @@ class ProfileCubit extends Cubit<ProfileStates> {
     });
   }
 
-  //update profile
+//update profile
+
   updateProfileInfo({required String city, required File fileImage}) async {
     emit(UpdateProfileLoadingState());
-    DioHelper.postData(
+    DioHelper.postDataWithFile(
             url: ProfileEndPoints.updateProfile,
-            data: {
+            formData: FormData.fromMap({
               "name": nameController.text,
               "address": addressController.text,
               "city": city,
               "phone": phoneController.text,
-              "image": await MultipartFile.fromFile(fileImage.path),
-             
-            },
+              "image": await MultipartFile.fromFile(
+                fileImage.path,
+                filename: fileImage.path.split('/').last,
+              ),
+            }),
             token: Token.getBearerToken())
         .then((value) {
       AppLocalStorage.cacheData("image", value.data["data"]["image"]);
       AppLocalStorage.cacheData("name", value.data["data"]["name"]);
-
-      getProfile();
       emit(UpdateProfileSuccessState());
     }).catchError((onError) {
       print(onError.toString());
@@ -119,13 +123,4 @@ class ProfileCubit extends Cubit<ProfileStates> {
       emit(ContactUsErrorState());
     });
   }
-
-// Future uploadOnlyImage() async {
-//     emit(UploadLoadingState());
-//     FilePickerResult? result = await FilePicker.platform.pickFiles(
-//       type: FileType.custom,
-//     );
-//     fileImage = File(result?.files.single.path ?? "");
-//     emit(UploadSuccessState());
-//   }
 }

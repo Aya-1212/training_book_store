@@ -33,7 +33,6 @@ class RecevierInfoWidget extends StatelessWidget {
         children: [
           Text(
             "Recevier Information",
-            maxLines: 1,
             overflow: TextOverflow.ellipsis,
             style: getBodyStyle(
                 color: AppColors.purple,

@@ -9,8 +9,8 @@ import 'package:training_book_store/core/widgets/custorm_dialogs.dart';
 import 'package:training_book_store/core/widgets/navigation_bar_view.dart';
 import 'package:training_book_store/features/cart/presentation/view_model/cart_cubit.dart';
 import 'package:training_book_store/features/cart/presentation/view_model/cart_states.dart';
-import 'package:training_book_store/features/order/presentation/views/order_history/all_orders/orders_history.dart';
-import 'package:training_book_store/features/order/presentation/views/place_order/place_order_view.dart';
+import 'package:training_book_store/features/order/presentation/views/orders_history.dart';
+import 'package:training_book_store/features/order/presentation/views/place_order_view.dart';
 
 // ignore: must_be_immutable
 class CartView extends StatelessWidget {
@@ -164,180 +164,180 @@ class CartView extends StatelessWidget {
                               style: getTitleStyle(),
                             )),
                         const Gap(15),
-                        Expanded(
-                          child: ListView.separated(
-                            itemBuilder: (context, index) {
-                              itemPrices.add(cartDetails.data!.cartItems![index]
-                                  .itemProductPriceAfterDiscount!);
-                              return Container(
-                                padding: const EdgeInsets.all(10),
-                                height: 210,
-                                width: double.infinity,
-                                decoration: BoxDecoration(
-                                    boxShadow: const [
-                                      BoxShadow(
-                                          color: AppColors.grey,
-                                          blurRadius: 10,
-                                          offset: Offset(5, 5)),
-                                    ],
-                                    border: Border.all(
-                                        color: AppColors.black, width: 1),
-                                    color: AppColors.white,
-                                    borderRadius: const BorderRadius.all(
-                                        Radius.circular(5))),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Stack(children: [
-                                      ClipRRect(
-                                        borderRadius: const BorderRadius.all(
-                                            Radius.circular(5)),
-                                        child: Image.network(
-                                          cartDetails.data?.cartItems?[index]
-                                                  .itemProductImage ??
-                                              '',
-                                          height: 180,
-                                          width: 150,
-                                          fit: BoxFit.fill,
-                                          errorBuilder:
-                                              (context, error, stackTrace) {
-                                            return Container(
-                                              color: AppColors.grey,
-                                              height: 180,
-                                              width: 150,
-                                              child: const Icon(
-                                                Icons.error_outline,
-                                                color: AppColors.white,
-                                                size: 35,
-                                              ),
-                                            );
-                                          },
-                                        ),
-                                      ),
-                                      Positioned(
-                                        top: 5,
-                                        left: 5,
-                                        child: Container(
-                                          height: 25,
-                                          width: 40,
-                                          decoration: BoxDecoration(
-                                              color: AppColors.red,
-                                              shape: BoxShape.rectangle,
-                                              borderRadius:
-                                                  BorderRadius.circular(5)),
-                                          child: Center(
-                                            child: Text(
-                                              '${cartDetails.data?.cartItems?[index].itemProductDiscount}%',
-                                              style: const TextStyle(
-                                                  color: AppColors.white,
-                                                  fontWeight: FontWeight.bold),
+                        ListView.separated(
+                          shrinkWrap: true,
+                          //physics
+                          itemBuilder: (context, index) {
+                            itemPrices.add(cartDetails.data!.cartItems![index]
+                                .itemProductPriceAfterDiscount!);
+                            return Container(
+                              padding: const EdgeInsets.all(10),
+                              height: 210,
+                              width: double.infinity,
+                              decoration: BoxDecoration(
+                                  boxShadow: const [
+                                    BoxShadow(
+                                        color: AppColors.grey,
+                                        blurRadius: 10,
+                                        offset: Offset(5, 5)),
+                                  ],
+                                  border: Border.all(
+                                      color: AppColors.black, width: 1),
+                                  color: AppColors.white,
+                                  borderRadius: const BorderRadius.all(
+                                      Radius.circular(5))),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Stack(children: [
+                                    ClipRRect(
+                                      borderRadius: const BorderRadius.all(
+                                          Radius.circular(5)),
+                                      child: Image.network(
+                                        cartDetails.data?.cartItems?[index]
+                                                .itemProductImage ??
+                                            '',
+                                        height: 180,
+                                        width: 150,
+                                        fit: BoxFit.fill,
+                                        errorBuilder:
+                                            (context, error, stackTrace) {
+                                          return Container(
+                                            color: AppColors.grey,
+                                            height: 180,
+                                            width: 150,
+                                            child: const Icon(
+                                              Icons.error_outline,
+                                              color: AppColors.white,
+                                              size: 35,
                                             ),
+                                          );
+                                        },
+                                      ),
+                                    ),
+                                    Positioned(
+                                      top: 5,
+                                      left: 5,
+                                      child: Container(
+                                        height: 25,
+                                        width: 40,
+                                        decoration: BoxDecoration(
+                                            color: AppColors.red,
+                                            shape: BoxShape.rectangle,
+                                            borderRadius:
+                                                BorderRadius.circular(5)),
+                                        child: Center(
+                                          child: Text(
+                                            '${cartDetails.data?.cartItems?[index].itemProductDiscount}%',
+                                            style: const TextStyle(
+                                                color: AppColors.white,
+                                                fontWeight: FontWeight.bold),
                                           ),
                                         ),
-                                      )
-                                    ]),
-                                    const Gap(8),
-                                    Expanded(
-                                      child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            cartDetails.data?.cartItems?[index]
-                                                    .itemProductName ??
-                                                '',
-                                            maxLines: 1,
-                                            overflow: TextOverflow.ellipsis,
-                                            style: getBodyStyle(
-                                                fontWeight: FontWeight.w600),
-                                          ),
-                                          Text(
-                                            'Item Quantity: ${cartDetails.data?.cartItems?[index].itemQuantity}',
-                                            style: getBodyStyle(
-                                                fontSize: 17,
-                                                fontWeight: FontWeight.w600),
-                                          ),
-                                          const Gap(6),
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children: [
-                                              GestureDetector(
-                                                onTap: () {
-                                                  updateItemQuantity(context,
-                                                      cubit: cubit,
-                                                      itemId: cartDetails
-                                                              .data
-                                                              ?.cartItems?[
-                                                                  index]
-                                                              .itemId ??
-                                                          0,
-                                                      quantity:
-                                                          "${cartDetails.data?.cartItems?[index].itemQuantity}");
-                                                },
-                                                child: Text(
-                                                  'Update',
-                                                  style: getBodyStyle(
-                                                      fontSize: 16,
-                                                      fontWeight:
-                                                          FontWeight.w600,
-                                                      color: AppColors.purple),
-                                                ),
-                                              ),
-                                              const Gap(40),
-                                              GestureDetector(
-                                                onTap: () {
-                                                  cubit.deleteCartItem(
-                                                      index: index,
-                                                      cartItemId:
-                                                          "${cartDetails.data?.cartItems?[index].itemId}");
-                                                },
-                                                child: Text(
-                                                  'Remove',
-                                                  style: getBodyStyle(
-                                                      fontSize: 16,
-                                                      fontWeight:
-                                                          FontWeight.w600,
-                                                      color: AppColors.red),
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                          const Gap(6),
-                                          Text(
-                                            'Total :${cartDetails.data?.cartItems?[index].itemTotal!.toStringAsFixed(2)} EGP',
-                                            style: getBodyStyle(
-                                                fontSize: 17,
-                                                fontWeight: FontWeight.w600),
-                                          ),
-                                          Text(
-                                              '${cartDetails.data?.cartItems?[index].itemProductPrice} EGP',
-                                              style: const TextStyle(
-                                                  decoration: TextDecoration
-                                                      .lineThrough,
-                                                  color: AppColors.black,
-                                                  fontSize: 16,
-                                                  fontWeight: FontWeight.w600)),
-                                          Text(
-                                            '${cartDetails.data?.cartItems?[index].itemProductPriceAfterDiscount} EGP',
-                                            style: getSmallStyle(
-                                                color: AppColors.purple,
-                                                fontSize: 16,
-                                                fontWeight: FontWeight.w800),
-                                          ),
-                                        ],
                                       ),
                                     )
-                                  ],
-                                ),
-                              );
-                            },
-                            separatorBuilder: (context, index) {
-                              return const Gap(20);
-                            },
-                            itemCount: cartDetails!.data!.cartItems!.length,
-                            scrollDirection: Axis.vertical,
-                          ),
+                                  ]),
+                                  const Gap(8),
+                                  Expanded(
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          cartDetails.data?.cartItems?[index]
+                                                  .itemProductName ??
+                                              '',
+                                          maxLines: 1,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: getBodyStyle(
+                                              fontWeight: FontWeight.w600),
+                                        ),
+                                        Text(
+                                          'Item Quantity: ${cartDetails.data?.cartItems?[index].itemQuantity}',
+                                          style: getBodyStyle(
+                                              fontSize: 17,
+                                              fontWeight: FontWeight.w600),
+                                        ),
+                                        const Gap(6),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            GestureDetector(
+                                              onTap: () {
+                                                updateItemQuantity(context,
+                                                    cubit: cubit,
+                                                    itemId: cartDetails
+                                                            .data
+                                                            ?.cartItems?[
+                                                                index]
+                                                            .itemId ??
+                                                        0,
+                                                    quantity:
+                                                        "${cartDetails.data?.cartItems?[index].itemQuantity}");
+                                              },
+                                              child: Text(
+                                                'Update',
+                                                style: getBodyStyle(
+                                                    fontSize: 16,
+                                                    fontWeight:
+                                                        FontWeight.w600,
+                                                    color: AppColors.purple),
+                                              ),
+                                            ),
+                                            const Gap(40),
+                                            GestureDetector(
+                                              onTap: () {
+                                                cubit.deleteCartItem(
+                                                    index: index,
+                                                    cartItemId:
+                                                        cartDetails.data!.cartItems![index].itemId!);
+                                              },
+                                              child: Text(
+                                                'Remove',
+                                                style: getBodyStyle(
+                                                    fontSize: 16,
+                                                    fontWeight:
+                                                        FontWeight.w600,
+                                                    color: AppColors.red),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        const Gap(6),
+                                        Text(
+                                          'Total :${cartDetails.data?.cartItems?[index].itemTotal!.toStringAsFixed(2)} EGP',
+                                          style: getBodyStyle(
+                                              fontSize: 17,
+                                              fontWeight: FontWeight.w600),
+                                        ),
+                                        Text(
+                                            '${cartDetails.data?.cartItems?[index].itemProductPrice} EGP',
+                                            style: const TextStyle(
+                                                decoration: TextDecoration
+                                                    .lineThrough,
+                                                color: AppColors.black,
+                                                fontSize: 16,
+                                                fontWeight: FontWeight.w600)),
+                                        Text(
+                                          '${cartDetails.data?.cartItems?[index].itemProductPriceAfterDiscount} EGP',
+                                          style: getSmallStyle(
+                                              color: AppColors.purple,
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.w800),
+                                        ),
+                                      ],
+                                    ),
+                                  )
+                                ],
+                              ),
+                            );
+                          },
+                          separatorBuilder: (context, index) {
+                            return const Gap(20);
+                          },
+                          itemCount: cartDetails!.data!.cartItems!.length,
+                          scrollDirection: Axis.vertical,
                         ),
                       ],
                     )

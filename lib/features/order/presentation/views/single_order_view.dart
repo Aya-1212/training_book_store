@@ -7,9 +7,9 @@ import 'package:training_book_store/core/utils/text_style.dart';
 import 'package:training_book_store/core/widgets/custom_elevated.dart';
 import 'package:training_book_store/features/order/presentation/view_model/order_cubit.dart';
 import 'package:training_book_store/features/order/presentation/view_model/order_states.dart';
-import 'package:training_book_store/features/order/presentation/views/order_history/single_order/order_info_widget.dart';
-import 'package:training_book_store/features/order/presentation/views/order_history/single_order/ordered_products_info_widget.dart';
-import 'package:training_book_store/features/order/presentation/views/order_history/single_order/receiver_info_widget.dart';
+import 'package:training_book_store/features/order/presentation/widgets/single_order/order_info_widget.dart';
+import 'package:training_book_store/features/order/presentation/widgets/single_order/ordered_products_info_widget.dart';
+import 'package:training_book_store/features/order/presentation/widgets/single_order/receiver_info_widget.dart';
 
 class SingleOrderView extends StatelessWidget {
   const SingleOrderView({super.key, required this.ordertId});
@@ -102,62 +102,78 @@ class SingleOrderView extends StatelessWidget {
 
             return Padding(
               padding: const EdgeInsets.all(20),
-              child: singleOrderModel != null
-                  ? Column(
-                      children: [
-                        OrderInfoWidget(singleOrderModel: singleOrderModel),
-                        const Gap(20),
-                        RecevierInfoWidget(singleOrderModel: singleOrderModel),
-                        const Gap(25),
-                        OrderedProductsInfoWidget(
-                            singleOrderModel: singleOrderModel),
-                      ],
-                    )
-                  : Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Center(
-                          child: Container(
-                            height: 200,
-                            width: double.infinity,
-                            margin: const EdgeInsets.all(10),
-                            padding: const EdgeInsets.all(5),
-                            decoration: BoxDecoration(
-                              color: AppColors.white,
-                              boxShadow: const [
-                                BoxShadow(
-                                    color: AppColors.grey,
-                                    blurRadius: 10,
-                                    offset: Offset(5, 5)),
-                              ],
-                              border: Border.all(
-                                  color: AppColors.purple, width: 2.5),
-                              borderRadius:
-                                  const BorderRadius.all(Radius.circular(5)),
-                            ),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                const Icon(
-                                  Icons.error_outline,
-                                  size: 50,
-                                  color: AppColors.purple,
-                                ),
-                                const Gap(25),
-                                Text(
-                                  'Something went wrong',
-                                  style: getTitleStyle(),
-                                ),
-                                Text(
-                                  'Try Again later',
-                                  style: getTitleStyle(),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ],
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "Products you Orderded",
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: getBodyStyle(
+                          color: AppColors.purple, fontWeight: FontWeight.w600),
                     ),
+                    const Gap(15),
+                    OrderedProductsInfoWidget(
+                      singleOrderModel: singleOrderModel!,
+                    ),
+                    const Gap(25),
+                    OrderInfoWidget(
+                      singleOrderModel: singleOrderModel,
+                    ),
+                    const Gap(20),
+                    RecevierInfoWidget(
+                      singleOrderModel: singleOrderModel,
+                    ),
+                  ],
+                ),
+              ),
+              //singleOrderModel != null    ?
+              // : Column(
+              //     mainAxisAlignment: MainAxisAlignment.center,
+              //     children: [
+              //       Center(
+              //         child: Container(
+              //           height: 200,
+              //           width: double.infinity,
+              //           margin: const EdgeInsets.all(10),
+              //           padding: const EdgeInsets.all(5),
+              //           decoration: BoxDecoration(
+              //             color: AppColors.white,
+              //             boxShadow: const [
+              //               BoxShadow(
+              //                   color: AppColors.grey,
+              //                   blurRadius: 10,
+              //                   offset: Offset(5, 5)),
+              //             ],
+              //             border: Border.all(
+              //                 color: AppColors.purple, width: 2.5),
+              //             borderRadius:
+              //                 const BorderRadius.all(Radius.circular(5)),
+              //           ),
+              //           child: Column(
+              //             mainAxisAlignment: MainAxisAlignment.center,
+              //             children: [
+              //               const Icon(
+              //                 Icons.error_outline,
+              //                 size: 50,
+              //                 color: AppColors.purple,
+              //               ),
+              //               const Gap(25),
+              //               Text(
+              //                 'Something went wrong',
+              //                 style: getTitleStyle(),
+              //               ),
+              //               Text(
+              //                 'Try Again later',
+              //                 style: getTitleStyle(),
+              //               ),
+              //             ],
+              //           ),
+              //         ),
+              //       ),
+              //     ],
+              //   ),
             );
           },
         ),

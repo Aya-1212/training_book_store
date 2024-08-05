@@ -48,8 +48,7 @@ class _ProfileViewState extends State<ProfileView> {
             }
           },
           builder: (context, state) {
-              print(Token.getBearerToken());
-
+            print(Token.getBearerToken());
             var cubit = ProfileCubit().object(context);
             if (state is GetProfileLoadingState ||
                 state is DeleteProfileLoadingState) {
@@ -174,7 +173,7 @@ class _ProfileViewState extends State<ProfileView> {
                             children: [
                               Text(
                                 'Account information',
-                                style: getTitleStyle(color: AppColors.purple),
+                                style: getTitleStyle(fontSize: 20),
                               ),
                               Align(
                                   alignment: Alignment.centerRight,
@@ -317,6 +316,7 @@ class _ProfileViewState extends State<ProfileView> {
     );
   }
 
+  //delelte profile
   showDialogDeleteProfile(BuildContext context, {required ProfileCubit cubit}) {
     var passwordController = TextEditingController();
     return showDialog(
@@ -377,4 +377,5 @@ class _ProfileViewState extends State<ProfileView> {
       },
     );
   }
+//
 }

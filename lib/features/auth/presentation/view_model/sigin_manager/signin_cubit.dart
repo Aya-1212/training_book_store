@@ -15,7 +15,7 @@ class SignInCubit extends Cubit<SignInStates> {
   final password = TextEditingController();
   final passwordConfirm = TextEditingController();
   final emailForgetPassword = TextEditingController();
-  final verifyCode = TextEditingController();
+  final pinController = TextEditingController();
 
   login() {
     emit(SignInLoadingState());
@@ -47,7 +47,7 @@ class SignInCubit extends Cubit<SignInStates> {
   verifyCodeMethod() {
     emit(VerifyCodeLoadingState());
     DioHelper.postData(url: AuthEndPoints.verifyCode, data: {
-      'verify_code': verifyCode.text,
+      'verify_code': pinController.text,
     }).then((value) {
       emit(VerifyCodeSucessState());
     }).catchError((onError) {
@@ -55,10 +55,10 @@ class SignInCubit extends Cubit<SignInStates> {
     });
   }
 
-  resetPassword() {
+  resetPassword({required String verifyCode}) {
     emit(ResetPasswordLoadingState());
     DioHelper.postData(url: AuthEndPoints.resetPassword, data: {
-      'verify_code': verifyCode.text,
+      'verify_code': verifyCode,
       'new_password': password.text,
       'new_password_confirmation': passwordConfirm.text,
     }).then((value) {

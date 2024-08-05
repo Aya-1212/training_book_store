@@ -35,6 +35,8 @@ class _RegisterViewState extends State<RegisterView> {
               showCustomDialog(context, message: state.error);
             } else if (state is RegisterSucessState) {
               pushAndRemoveUntil(context, const NavigationBarView());
+              showCustomDialog(context,
+                  message: "Register Successfully", backgroundColor: AppColors.purple);
             }
           },
           builder: (context, state) {

@@ -34,6 +34,8 @@ class _SignInViewState extends State<SignInView> {
               showCustomDialog(context, message: state.error);
             } else if (state is SignInSucessState) {
               pushAndRemoveUntil(context, const NavigationBarView());
+              showCustomDialog(context,
+                  message: "Login Successfully", backgroundColor: AppColors.purple);
             }
           },
           builder: (context, state) {

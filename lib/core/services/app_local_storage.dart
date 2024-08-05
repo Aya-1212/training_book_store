@@ -14,10 +14,16 @@ class AppLocalStorage {
       pref!.setDouble(key, value);
     } else if (value is bool) {
       pref!.setBool(key, value);
-    } else {
+    } else  {
      await pref!.setString(key, value);
-    }
+    } 
   }
+
+
+  //   static Future<void> cacheListOfData(key, value)async {
+  //      pref!.setStringList(key,value);
+    
+  // }
 
   static dynamic getData(key) {
    return pref!.get(key);

@@ -90,11 +90,7 @@ class OrderDetails extends StatelessWidget {
                     )
                   ]),
                 ),
-                // Text(
-                //   '${cartItems[index].itemTotal} EGP',
-                //   style:
-                //       getBodyStyle(fontSize: 17, fontWeight: FontWeight.w600),
-                // ),
+
               ],
             ),
           );

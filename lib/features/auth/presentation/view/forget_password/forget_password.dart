@@ -40,7 +40,9 @@ class ForgetPasswordView extends StatelessWidget {
             if (state is ForgetPasswordErrorState) {
               showCustomDialog(context, message: state.error);
             } else if (state is ForgetPasswordSucessState) {
-              push(context, VerifyCodeView());
+              push(context, const VerifyCodeView());
+               showCustomDialog(context,
+                  message: "Email Verified", backgroundColor: AppColors.purple);
             }
           },
           builder: (context, state) {
@@ -55,7 +57,7 @@ class ForgetPasswordView extends StatelessWidget {
                       Text(
                         'Enter your email',
                         //textAlign: TextAlign.start,
-                        style: getTitleStyle(),
+                        style: getTitleStyle(fontSize: 20),
                       ),
                       const Gap(15),
                       TextFormField(

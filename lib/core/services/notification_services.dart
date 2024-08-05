@@ -43,7 +43,7 @@ class NotificationServices {
   //4.method
   void _onDidReceiveNotificationResponse(NotificationResponse details) {}
 
-  Future<NotificationDetails> notificationDetails() async {
+  NotificationDetails notificationDetails()  {
     const AndroidNotificationDetails androidNotificationDetails =
         AndroidNotificationDetails(
       'channel id',
@@ -56,7 +56,7 @@ class NotificationServices {
     const DarwinNotificationDetails darwinNotificationDetails =
         DarwinNotificationDetails();
 
-    return const NotificationDetails(
+    return  const NotificationDetails(
       android: androidNotificationDetails,
       iOS: darwinNotificationDetails,
     );
@@ -68,6 +68,6 @@ class NotificationServices {
   Future<void> showInstantNotification(
       {required int id, required String title, required String body}) async {
     await localNotificationsPlugin.show(
-        id, title, body, notificationDetails() as NotificationDetails?);
+        id, title, body,notificationDetails() );
   }
 }

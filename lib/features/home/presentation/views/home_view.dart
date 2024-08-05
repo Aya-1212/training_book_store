@@ -1,4 +1,4 @@
-// ignore_for_file: file_names
+// ignore_for_file: file_names, use_build_context_synchronously
 
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
@@ -6,17 +6,20 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 import 'package:training_book_store/core/functions/routing.dart';
 import 'package:training_book_store/core/services/app_local_storage.dart';
+import 'package:training_book_store/core/services/notification_services.dart';
 import 'package:training_book_store/core/utils/app_colors.dart';
 import 'package:training_book_store/core/utils/text_style.dart';
 import 'package:training_book_store/core/widgets/navigation_bar_view.dart';
 import 'package:training_book_store/features/home/data/category_list.dart';
+import 'package:training_book_store/features/home/data/model/slider/slider_model.dart';
 import 'package:training_book_store/features/home/presentation/view_model/product_cubit.dart';
 import 'package:training_book_store/features/home/presentation/view_model/product_states.dart';
-import 'package:training_book_store/features/home/presentation/views/home_widgets/best_seller_view.dart';
-import 'package:training_book_store/features/home/presentation/views/home_widgets/new_arrivals.dart';
 import 'package:training_book_store/features/home/presentation/views/show_product_by_category.dart';
+import 'package:training_book_store/features/home/presentation/widgets/home_widgets/best_seller_view.dart';
+import 'package:training_book_store/features/home/presentation/widgets/home_widgets/new_arrivals.dart';
 import 'package:training_book_store/features/profile/presentation/views/drawer_settings/change_password_view.dart';
 import 'package:training_book_store/features/profile/presentation/views/drawer_settings/send_message_screen.dart';
+import 'package:training_book_store/features/profile/presentation/views/profile_view.dart';
 import 'package:training_book_store/features/profile/presentation/views/update_profile_screen.dart';
 
 class HomeView extends StatefulWidget {
@@ -57,7 +60,13 @@ class _HomeViewState extends State<HomeView> {
                     color: AppColors.purple,
                     size: 40,
                   ),
-                  onPressed: () {
+                  onPressed: () async {
+                    // NotificationServices notificationServices =
+                    //     NotificationServices();
+                    // await notificationServices.showInstantNotification(
+                    //     id: 2,
+                    //     title: "opendrawer",
+                    //     body: "what do you want ? ");
                     Scaffold.of(context).openDrawer();
                   },
                 );
@@ -67,15 +76,15 @@ class _HomeViewState extends State<HomeView> {
             title: Column(
               children: [
                 Text(
-                  "Welcome, $name",
-                  style: getTitleStyle(fontSize: 20),
+                  "Hello, $name",
+                  style: getBodyStyle(
+                      color: AppColors.purple, fontWeight: FontWeight.w600),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                 ),
                 Text(
-                  "Have a nice day",
-                  style: getBodyStyle(
-                      color: AppColors.purple, fontWeight: FontWeight.w600),
+                  "Welcome Back!",
+                  style: getTitleStyle(fontSize: 18),
                 ),
               ],
             ),
@@ -115,24 +124,6 @@ class _HomeViewState extends State<HomeView> {
 /////////////////////////////////////////////////////////
               ListTile(
                 leading: const Icon(
-                  Icons.person,
-                  size: 30,
-                ),
-                title: Text(
-                  ' My Profile ',
-                  style: getBodyStyle(),
-                ),
-                onTap: () {
-                  pushWithReplacement(
-                      context,
-                      const NavigationBarView(
-                        page: 4,
-                      ));
-                },
-              ),
-///////////////////////////////////////////////////////////////
-              ListTile(
-                leading: const Icon(
                   Icons.edit,
                   size: 30,
                 ),
@@ -141,7 +132,7 @@ class _HomeViewState extends State<HomeView> {
                   style: getBodyStyle(),
                 ),
                 onTap: () {
-                  pushWithReplacement(
+                  push(
                     context,
                     const UpdateProfileScreen(),
                   );
@@ -204,7 +195,7 @@ class _HomeViewState extends State<HomeView> {
                       child: ListView(
                         children: [
                           const Divider(
-                            color: AppColors.raisinBlack,
+                            color: AppColors.purple,
                           ),
                           const Gap(10),
                           Text(
@@ -217,6 +208,89 @@ class _HomeViewState extends State<HomeView> {
                             bestseller: cubit.bestSellerProduct!,
                           ),
                           ////////////////////////////////////////////////////
+                          const Gap(30),
+                          ////////////////////slider
+                          Text(
+                            'News',
+                            style: getTitleStyle(),
+                          ),
+                          const Gap(15),
+                          state is SliderLoadingState
+                              ? const Center(
+                                  child: CircularProgressIndicator(),
+                                )
+                              : state is SliderErrorState
+                                  ? Center(
+                                      child: Container(
+                                        height: 150,
+                                        width: double.infinity,
+                                        margin: const EdgeInsets.all(10),
+                                        padding: const EdgeInsets.all(5),
+                                        decoration: BoxDecoration(
+                                          color: AppColors.white,
+                                          boxShadow: const [
+                                            BoxShadow(
+                                                color: AppColors.grey,
+                                                blurRadius: 10,
+                                                offset: Offset(5, 5)),
+                                          ],
+                                          border: Border.all(
+                                              color: AppColors.purple,
+                                              width: 2.5),
+                                          borderRadius: const BorderRadius.all(
+                                              Radius.circular(5)),
+                                        ),
+                                        child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            const Icon(
+                                              Icons.error_outline,
+                                              size: 50,
+                                              color: AppColors.purple,
+                                            ),
+                                            const Gap(25),
+                                            Text(
+                                              'Something went wrong',
+                                              style: getTitleStyle(),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    )
+                                  : CarouselSlider(
+                                      items: [
+                                        ItemCarouselSlider(
+                                          slider: cubit.sliderImage!,
+                                          index: 0,
+                                        ),
+                                        ItemCarouselSlider(
+                                          slider: cubit.sliderImage!,
+                                          index: 1,
+                                        ),
+                                        ItemCarouselSlider(
+                                          slider: cubit.sliderImage!,
+                                          index: 2,
+                                        ),
+                                      ],
+                                      options: CarouselOptions(
+                                        height: 150,
+                                        aspectRatio: 16 / 9,
+                                        viewportFraction: 0.5,
+                                        initialPage: 0,
+                                        enableInfiniteScroll: true,
+                                        reverse: true,
+                                        autoPlay: true,
+                                        autoPlayInterval:
+                                            const Duration(seconds: 3),
+                                        autoPlayAnimationDuration:
+                                            const Duration(milliseconds: 800),
+                                        autoPlayCurve: Curves.fastOutSlowIn,
+                                        enlargeCenterPage: true,
+                                        enlargeFactor: 0.3,
+                                        scrollDirection: Axis.horizontal,
+                                      ),
+                                    ),
                           ////////////////////category
                           const Gap(20),
                           Text(
@@ -292,173 +366,7 @@ class _HomeViewState extends State<HomeView> {
                               scrollDirection: Axis.horizontal,
                             ),
                           ),
-                          const Gap(30),
-                          ////////////////////slider
-                          Text(
-                            'News',
-                            style: getTitleStyle(),
-                          ),
-                          const Gap(15),
-                          state is SliderLoadingState
-                              ? const Center(
-                                  child: CircularProgressIndicator(),
-                                )
-                              : state is SliderErrorState
-                                  ? Center(
-                                      child: Container(
-                                        height: 150,
-                                        width: double.infinity,
-                                        margin: const EdgeInsets.all(10),
-                                        padding: const EdgeInsets.all(5),
-                                        decoration: BoxDecoration(
-                                          color: AppColors.white,
-                                          boxShadow: const [
-                                            BoxShadow(
-                                                color: AppColors.grey,
-                                                blurRadius: 10,
-                                                offset: Offset(5, 5)),
-                                          ],
-                                          border: Border.all(
-                                              color: AppColors.purple,
-                                              width: 2.5),
-                                          borderRadius: const BorderRadius.all(
-                                              Radius.circular(5)),
-                                        ),
-                                        child: Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            const Icon(
-                                              Icons.error_outline,
-                                              size: 50,
-                                              color: AppColors.purple,
-                                            ),
-                                            const Gap(25),
-                                            Text(
-                                              'Something went wrong',
-                                              style: getTitleStyle(),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    )
-                                  : CarouselSlider(
-                                      items: [
-                                        ClipRRect(
-                                          borderRadius: const BorderRadius.all(
-                                              Radius.circular(10)),
-                                          child: Image.network(
-                                            cubit.sliderImage?.data?.sliders![0]
-                                                    .image ??
-                                                '',
-                                            height: 100,
-                                            width: 200,
-                                            fit: BoxFit.cover,
-                                            errorBuilder:
-                                                (context, error, stackTrace) {
-                                              return Container(
-                                                height: 100,
-                                                width: 200,
-                                                decoration: BoxDecoration(
-                                                    color: AppColors.white,
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            10),
-                                                    border: Border.all(
-                                                        color: AppColors.black,
-                                                        width: 1)),
-                                                child: const Icon(
-                                                  Icons.error_outline,
-                                                  color: AppColors.white,
-                                                  size: 50,
-                                                ),
-                                              );
-                                            },
-                                          ),
-                                        ),
-                                        ClipRRect(
-                                          borderRadius: const BorderRadius.all(
-                                              Radius.circular(10)),
-                                          child: Image.network(
-                                            cubit.sliderImage?.data?.sliders![1]
-                                                    .image ??
-                                                '',
-                                            height: 100,
-                                            width: 200,
-                                            fit: BoxFit.cover,
-                                            errorBuilder:
-                                                (context, error, stackTrace) {
-                                              return Container(
-                                                height: 100,
-                                                width: 200,
-                                                decoration: BoxDecoration(
-                                                    color: AppColors.white,
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            10),
-                                                    border: Border.all(
-                                                        color: AppColors.black,
-                                                        width: 1)),
-                                                child: const Icon(
-                                                  Icons.error_outline,
-                                                  color: AppColors.white,
-                                                  size: 50,
-                                                ),
-                                              );
-                                            },
-                                          ),
-                                        ),
-                                        ClipRRect(
-                                          borderRadius: const BorderRadius.all(
-                                              Radius.circular(10)),
-                                          child: Image.network(
-                                            cubit.sliderImage?.data?.sliders![2]
-                                                    .image ??
-                                                '',
-                                            height: 100,
-                                            width: 200,
-                                            fit: BoxFit.cover,
-                                            errorBuilder:
-                                                (context, error, stackTrace) {
-                                              return Container(
-                                                height: 100,
-                                                width: 200,
-                                                decoration: BoxDecoration(
-                                                    color: AppColors.white,
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            10),
-                                                    border: Border.all(
-                                                        color: AppColors.black,
-                                                        width: 1)),
-                                                child: const Icon(
-                                                  Icons.error_outline,
-                                                  color: AppColors.white,
-                                                  size: 50,
-                                                ),
-                                              );
-                                            },
-                                          ),
-                                        ),
-                                      ],
-                                      options: CarouselOptions(
-                                        height: 150,
-                                        aspectRatio: 16 / 9,
-                                        viewportFraction: 0.5,
-                                        initialPage: 0,
-                                        enableInfiniteScroll: true,
-                                        reverse: true,
-                                        autoPlay: true,
-                                        autoPlayInterval:
-                                            const Duration(seconds: 3),
-                                        autoPlayAnimationDuration:
-                                            const Duration(milliseconds: 800),
-                                        autoPlayCurve: Curves.fastOutSlowIn,
-                                        enlargeCenterPage: true,
-                                        enlargeFactor: 0.3,
-                                        scrollDirection: Axis.horizontal,
-                                      ),
-                                    ),
+
                           ///////////////////////////////////////////////////////////////
                           const Gap(25),
                           Text(
@@ -476,6 +384,46 @@ class _HomeViewState extends State<HomeView> {
                 : const Center(child: CircularProgressIndicator());
           },
         ),
+      ),
+    );
+  }
+}
+
+class ItemCarouselSlider extends StatelessWidget {
+  const ItemCarouselSlider({
+    super.key,
+    required this.slider,
+    required this.index,
+  });
+
+  final SliderModel slider;
+  final int index;
+  @override
+  Widget build(
+    BuildContext context,
+  ) {
+    return ClipRRect(
+      borderRadius: const BorderRadius.all(Radius.circular(10)),
+      child: Image.network(
+        slider.data!.sliders![index].image!,
+        height: 100,
+        width: 200,
+        fit: BoxFit.cover,
+        errorBuilder: (context, error, stackTrace) {
+          return Container(
+            height: 100,
+            width: 200,
+            decoration: BoxDecoration(
+                color: AppColors.white,
+                borderRadius: BorderRadius.circular(10),
+                border: Border.all(color: AppColors.black, width: 1)),
+            child: const Icon(
+              Icons.error_outline,
+              color: AppColors.white,
+              size: 50,
+            ),
+          );
+        },
       ),
     );
   }

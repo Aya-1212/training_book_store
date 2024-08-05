@@ -8,7 +8,7 @@ import 'package:training_book_store/core/widgets/custom_elevated.dart';
 import 'package:training_book_store/core/widgets/navigation_bar_view.dart';
 import 'package:training_book_store/features/order/presentation/view_model/order_cubit.dart';
 import 'package:training_book_store/features/order/presentation/view_model/order_states.dart';
-import 'package:training_book_store/features/order/presentation/views/order_history/all_orders/all_orders_history_list.dart';
+import 'package:training_book_store/features/order/presentation/widgets/all_orders/all_orders_history_list.dart';
 
 class OrdersHistoryView extends StatelessWidget {
   const OrdersHistoryView({
@@ -107,34 +107,33 @@ class OrdersHistoryView extends StatelessWidget {
             } else if (state is GetOrderHistoryLoadingState) {
               return const Center(child: CircularProgressIndicator());
             }
-
             return ordersHistoryModel!.data!.orders!.isNotEmpty == true
                 ? Padding(
                     padding: const EdgeInsets.all(20),
-                    child: Column(
-                      children: [
-                        Text.rich(
-                          TextSpan(children: [
-                            TextSpan(
-                              text: 'Total Orders : ',
-                              style: getBodyStyle(
-                                  fontSize: 22, fontWeight: FontWeight.w600),
-                            ),
-                            TextSpan(
-                              text: '${ordersHistoryModel.data?.meta?.total}',
-                              style: getBodyStyle(
-                                  color: AppColors.purple,
-                                  fontSize: 22,
-                                  fontWeight: FontWeight.w600),
-                            )
-                          ]),
-                        ),
-                        const Gap(25),
-                        Expanded(
-                          child: AllOrdersHistoryList(
+                    child: SingleChildScrollView(
+                      child: Column(
+                        children: [
+                          Text.rich(
+                            TextSpan(children: [
+                              TextSpan(
+                                text: 'Total Orders : ',
+                                style: getBodyStyle(
+                                    fontSize: 22, fontWeight: FontWeight.w600),
+                              ),
+                              TextSpan(
+                                text: '${ordersHistoryModel.data?.meta?.total}',
+                                style: getBodyStyle(
+                                    color: AppColors.purple,
+                                    fontSize: 22,
+                                    fontWeight: FontWeight.w600),
+                              )
+                            ]),
+                          ),
+                          const Gap(25),
+                          AllOrdersHistoryList(
                               ordersHistoryModel: ordersHistoryModel),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   )
                 : Padding(

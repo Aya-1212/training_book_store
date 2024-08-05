@@ -95,7 +95,7 @@ class WishlistView extends StatelessWidget {
                         ),
                       ),
                     ),
-                     const Gap(10),
+                    const Gap(10),
                     CustomElevatedButton(
                       width: 180,
                       height: 60,
@@ -109,7 +109,6 @@ class WishlistView extends StatelessWidget {
                         cubit.getWishList();
                       },
                     ),
-                 
                   ],
                 ),
               );
@@ -123,7 +122,7 @@ class WishlistView extends StatelessWidget {
                           crossAxisCount: 2,
                           childAspectRatio: 0.55,
                         ),
-                        itemCount: cubit.getWishlist?.data?.itemData?.length,
+                        itemCount: cubit.getWishlist!.data!.itemData!.length,
                         padding: const EdgeInsets.all(20),
                         itemBuilder: (context, index) {
                           return InkWell(
@@ -131,12 +130,12 @@ class WishlistView extends StatelessWidget {
                               push(
                                   context,
                                   SingleProductView(
-                                    id: cubit.getWishlist?.data
-                                            ?.itemData?[index].id ??
-                                        0,
+                                    id: cubit.getWishlist!.data!
+                                        .itemData![index].id!,
                                   ));
                             },
                             child: Container(
+                              width: MediaQuery.of(context).size.width * 0.35,
                               margin: const EdgeInsets.all(10),
                               padding: const EdgeInsets.all(5),
                               decoration: BoxDecoration(
@@ -246,15 +245,14 @@ class WishlistView extends StatelessWidget {
                                                     CartCubit()
                                                         .object(context)
                                                         .addToCart(
-                                                            context: context,
-                                                            productId: cubit
-                                                                    .getWishlist
-                                                                    ?.data
-                                                                    ?.itemData?[
-                                                                        index]
-                                                                    .id
-                                                                    .toString() ??
-                                                                "");
+                                                          context: context,
+                                                          productId: cubit
+                                                              .getWishlist!
+                                                              .data!
+                                                              .itemData![index]
+                                                              .id!,
+                                                          showDialog: true,
+                                                        );
                                                   },
                                                   child: const Icon(
                                                     Icons
@@ -267,8 +265,11 @@ class WishlistView extends StatelessWidget {
                                           InkWell(
                                             onTap: () {
                                               cubit.removeFromWishList(
-                                                  productId:
-                                                      "${cubit.getWishlist?.data?.itemData?[index].id}",
+                                                  productId: cubit
+                                                      .getWishlist!
+                                                      .data!
+                                                      .itemData![index]
+                                                      .id!,
                                                   index: index);
                                             },
                                             child: Text(
@@ -329,11 +330,11 @@ class WishlistView extends StatelessWidget {
                             const Gap(20),
                             CustomElevatedButton(
                               onPressed: () {
-                                pushWithReplacement(
+                                push(
                                     context,
                                     const NavigationBarView(
                                       page: 1,
-                                    ));
+                                    ),);
                               },
                               width: 300,
                               child: Text(

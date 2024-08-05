@@ -14,7 +14,8 @@ class OrderedProductsInfoWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
+    return SizedBox(
+      height: 250,
       child: ListView.separated(
         itemBuilder: (context, index) {
           return Container(
@@ -33,14 +34,33 @@ class OrderedProductsInfoWidget extends StatelessWidget {
                 borderRadius: const BorderRadius.all(
                     Radius.circular(5))),
             child: Column(
+              mainAxisSize: MainAxisSize.min,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                 Text.rich(
+                  TextSpan(children: [
+                    TextSpan(
+                      text: 'Product Id : ',
+                      style: getBodyStyle(
+                          fontSize: 17,
+                          fontWeight: FontWeight.w600),
+                    ),
+                    TextSpan(
+                      text:
+                          ' ${singleOrderModel.data!.orderProducts![index].productId}',
+                      style: getBodyStyle(
+                          color: AppColors.purple,
+                          fontSize: 17,
+                          fontWeight: FontWeight.w600),
+                    )
+                  ]),
+                ),
+                const Gap(6),
                 Text(
                   singleOrderModel
                           .data
-                          ?.orderProducts?[index]
-                          .productName ??
-                      '',
+                          !.orderProducts![index]
+                          .productName!,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: getBodyStyle(
@@ -58,7 +78,7 @@ class OrderedProductsInfoWidget extends StatelessWidget {
                     ),
                     TextSpan(
                       text:
-                          ' ${singleOrderModel.data?.orderProducts?[index].orderProductQuantity}',
+                          ' ${singleOrderModel.data!.orderProducts![index].orderProductQuantity}',
                       style: getBodyStyle(
                           color: AppColors.purple,
                           fontSize: 17,
@@ -77,7 +97,7 @@ class OrderedProductsInfoWidget extends StatelessWidget {
                     ),
                     TextSpan(
                       text:
-                          ' ${singleOrderModel.data?.orderProducts?[index].productPriceAfterDiscount} EGP',
+                          ' ${singleOrderModel.data!.orderProducts![index].productPriceAfterDiscount} EGP',
                       style: getBodyStyle(
                           color: AppColors.purple,
                           fontSize: 17,
@@ -99,7 +119,7 @@ class OrderedProductsInfoWidget extends StatelessWidget {
                     ),
                     TextSpan(
                       text:
-                          ' ${singleOrderModel.data?.orderProducts?[index].productTotal} EGP',
+                          ' ${singleOrderModel.data!.orderProducts![index].productTotal} EGP',
                       style: getBodyStyle(
                           color: AppColors.purple,
                           fontSize: 17,
@@ -120,9 +140,8 @@ class OrderedProductsInfoWidget extends StatelessWidget {
           return const Gap(15);
         },
         itemCount:
-            singleOrderModel.data?.orderProducts?.length ??
-                0,
-        scrollDirection: Axis.vertical,
+            singleOrderModel.data!.orderProducts!.length ,
+        scrollDirection: Axis.horizontal,
       ),
     );
   }

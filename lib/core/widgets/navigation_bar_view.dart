@@ -24,7 +24,7 @@ class _NavigationBarViewState extends State<NavigationBarView> {
   int selectedIndex = 0;
   List<Widget> pages = [
     const HomeView(),
-    SearchView(),
+    const SearchView(),
     const WishlistView(),
     CartView(),
     const ProfileView(),
@@ -35,89 +35,78 @@ class _NavigationBarViewState extends State<NavigationBarView> {
     return Scaffold(
       backgroundColor: AppColors.white,
       body: pages[selectedIndex],
-      bottomNavigationBar: Container(
-        height: 80,
-        decoration: const BoxDecoration(
-          color: AppColors.white,
-          borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
-          boxShadow: [
-            BoxShadow(
-                color: AppColors.grey, blurRadius: 10, offset: Offset(3, 3)),
-          ],
-        ),
-        child: SalomonBottomBar(
-          itemPadding: const EdgeInsets.all(10),
-          margin: const EdgeInsets.all(10),
-          selectedColorOpacity: 0.25,
-          currentIndex: selectedIndex,
-          onTap: (index) => setState(() => selectedIndex = index),
-          items: [
-            /// Home
-            SalomonBottomBarItem(
-              icon: const Icon(
-                Icons.home_filled,
-                size: 28,
-              ),
-              title: const Text(
-                "Home",
-                style: TextStyle(fontSize: 20),
-              ),
-              selectedColor: AppColors.purple,
+      bottomNavigationBar: SalomonBottomBar(
+        itemPadding: const EdgeInsets.all(10),
+        margin: const EdgeInsets.all(10),
+        selectedColorOpacity: 0.25,
+        currentIndex: selectedIndex,
+        onTap: (index) => setState(() => selectedIndex = index),
+        items: [
+          /// Home
+          SalomonBottomBarItem(
+            icon: const Icon(
+              Icons.home_filled,
+              size: 28,
             ),
-
-            /// search
-            SalomonBottomBarItem(
-              icon: const Icon(
-                Icons.search,
-                size: 28,
-              ),
-              title: const Text(
-                "Search",
-                style: TextStyle(fontSize: 20),
-              ),
-              selectedColor: AppColors.purple,
+            title: const Text(
+              "Home",
+              style: TextStyle(fontSize: 20),
             ),
-
-            /// wishlist
-            SalomonBottomBarItem(
-              icon: const Icon(
-                Icons.favorite_border,
-                size: 28,
-              ),
-              title: const Text(
-                "Wishlist",
-                style: TextStyle(fontSize: 20),
-              ),
-              selectedColor: AppColors.purple,
+            selectedColor: AppColors.purple,
+          ),
+      
+          /// search
+          SalomonBottomBarItem(
+            icon: const Icon(
+              Icons.search,
+              size: 28,
             ),
-
-            /// cart
-            SalomonBottomBarItem(
-              icon: const Icon(
-                Icons.shopping_cart_rounded,
-                size: 28,
-              ),
-              title: const Text(
-                "Cart",
-                style: TextStyle(fontSize: 20),
-              ),
-              selectedColor: AppColors.purple,
+            title: const Text(
+              "Search",
+              style: TextStyle(fontSize: 20),
             ),
-
-            /// Profile
-            SalomonBottomBarItem(
-              icon: const Icon(
-                Icons.person_2_sharp,
-                size: 28,
-              ),
-              title: const Text(
-                "Profile",
-                style: TextStyle(fontSize: 20),
-              ),
-              selectedColor: AppColors.purple,
+            selectedColor: AppColors.purple,
+          ),
+      
+          /// wishlist
+          SalomonBottomBarItem(
+            icon: const Icon(
+              Icons.favorite_border,
+              size: 28,
             ),
-          ],
-        ),
+            title: const Text(
+              "Wishlist",
+              style: TextStyle(fontSize: 20),
+            ),
+            selectedColor: AppColors.purple,
+          ),
+      
+          /// cart
+          SalomonBottomBarItem(
+            icon: const Icon(
+              Icons.shopping_cart_rounded,
+              size: 28,
+            ),
+            title: const Text(
+              "Cart",
+              style: TextStyle(fontSize: 20),
+            ),
+            selectedColor: AppColors.purple,
+          ),
+      
+          /// Profile
+          SalomonBottomBarItem(
+            icon: const Icon(
+              Icons.person_2_sharp,
+              size: 28,
+            ),
+            title: const Text(
+              "Profile",
+              style: TextStyle(fontSize: 20),
+            ),
+            selectedColor: AppColors.purple,
+          ),
+        ],
       ),
     );
   }

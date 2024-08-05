@@ -18,6 +18,7 @@ class CartCubit extends Cubit<CartStates> {
   AddCartModel? itemId;
   AddCartModel? cartDetails;
   var quantity = TextEditingController();
+  List<int>? productAddedToCart;
 
 //methods
 
@@ -51,20 +52,29 @@ class CartCubit extends Cubit<CartStates> {
 
   //add to cart
 
-  addToCart({required String productId, required BuildContext context}) {
+  addToCart({
+    required int productId,
+    required BuildContext context,
+    //show dialog?? singleProduct مش عاوزه ال Dialog يظهر في الصفحة دي
+    required bool showDialog,
+  }) {
     emit(AddToCartLoadingState());
     DioHelper.postData(
             url: OrderEndPoints.addToCart,
             data: {
-              "product_id": productId,
+              "product_id": "$productId",
             },
             token: Token.getBearerToken())
         .then((value) {
+      // print(productAddedToCart);
       itemId = AddCartModel.fromJson(value.data);
+    //  productAddedToCart!.add(productId);
+      showDialog
+          ? showCustomDialog(context,
+              message: 'Item added to cart', backgroundColor: AppColors.purple)
+          : null;
+  //    print(productAddedToCart);
 
-      // pop(context);
-      showCustomDialog(context,
-          message: 'Item added to cart', backgroundColor: AppColors.purple);
       emit(AddToCartSuccessState());
     }).catchError((onError) {
       emit(AddToCartErrorState());
@@ -92,17 +102,24 @@ class CartCubit extends Cubit<CartStates> {
 
   //delete card item
 
-  deleteCartItem({required String cartItemId, required int index}) {
+  deleteCartItem({
+    required int cartItemId,
+    required int index,
+  }) {
     emit(DeleteCartItemLoadingState());
     DioHelper.postData(
             url: OrderEndPoints.deleteCartItem,
             data: {
-              "cart_item_id": cartItemId,
+              "cart_item_id": "$cartItemId",
             },
             token: Token.getBearerToken())
         .then((value) {
+      // if (productAddedToCart!.isNotEmpty) {
+      //   productAddedToCart!.removeAt(index);
+      // }
       cartDetails?.data?.cartItems?.removeAt(index);
-      showCart();
+     // productAddedToCart!.removeAt(index);
+    //  showCart();
       emit(DeleteCartItemSuccessState());
     }).catchError((onError) {
       emit(DeleteCartItemErrorState());

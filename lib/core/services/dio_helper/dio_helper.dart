@@ -8,6 +8,7 @@ class DioHelper {
   static init() {
     dio = Dio(BaseOptions(
       baseUrl: AuthEndPoints.baseUrl,
+
       /// I/flutter ( 4876): ║ The request connection took a /// longer than 0:00:00.000000 and it was aborted. /// To get rid of this exception, ///  try raising the RequestOptions.connectTimeout above the duration of 0:00:00.000000 or improve the response time of the server.
       connectTimeout: const Duration(seconds: 60),
       //no internet
@@ -26,9 +27,18 @@ class DioHelper {
         error: true,
         compact: true,
         maxWidth: 90));
+//   dio.interceptors.add(InterceptorsWrapper(
+//   onError: (DioError e, handler) {
+//     print(e.message);
+//     return handler.next(e);
+//   },
+// ));
+
   }
 
 //flutter pub add pretty_dio_logger
+//
+
   //get data
   static Future<Response> getData(
       {required String url,
@@ -48,6 +58,8 @@ class DioHelper {
     );
   }
 
+//postData
+
   static Future<Response> postData(
       {required String url,
       required Map<String, dynamic>? data,
@@ -60,5 +72,19 @@ class DioHelper {
       };
     }
     return await dio!.post(url, data: data);
+  }
+
+//post data with file
+
+  static Future<Response> postDataWithFile(
+      {required String url, required FormData formData, String? token}) async {
+    if (token != null) {
+      dio!.options.headers = {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token',
+      };
+    }
+    return await dio!.post(url, data: formData);
   }
 }

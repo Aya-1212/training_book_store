@@ -31,7 +31,9 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
     FilePickerResult? result = await FilePicker.platform.pickFiles(
       type: FileType.any,
     );
+    //fileImage = resu
     fileImage = File(result!.files.single.path!);
+   // result.files.
     setState(() {});
   }
 

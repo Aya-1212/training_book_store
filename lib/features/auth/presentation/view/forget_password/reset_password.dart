@@ -41,14 +41,15 @@ class _ResetPasswordViewState extends State<ResetPasswordView> {
                 showCustomDialog(context, message: state.error);
               } else if (state is ResetPasswordSucessState) {
                 pushWithReplacement(context, const SignInView());
+                showCustomDialog(context,
+                  message: "Changed Password Successfully", backgroundColor: AppColors.purple);
               }
             },
             builder: (context, state) {
               var cubit = SignInCubit().object(context);
-              cubit.verifyCode.text = widget.verify_code;
               return SafeArea(
                 child: Padding(
-                  padding: const EdgeInsets.all(20),
+                  padding: const EdgeInsets.all(25),
                   child: Form(
                     key: formKey,
                     child: Column(
@@ -56,12 +57,11 @@ class _ResetPasswordViewState extends State<ResetPasswordView> {
                         children: [
                           Text(
                             'Change Your Password',
-                            style: getTitleStyle(
-                                fontWeight: FontWeight.w600, fontSize: 26),
+                            style: getTitleStyle(fontSize: 21),
                           ),
                           const Gap(35),
                           TextFormField(
-                            style: getBodyStyle(fontSize: 20),
+                            style: getBodyStyle(),
                             decoration: InputDecoration(
                               suffixIcon: IconButton(
                                 onPressed: () {
@@ -69,9 +69,14 @@ class _ResetPasswordViewState extends State<ResetPasswordView> {
                                     isVisible1 = !isVisible1;
                                   });
                                 },
-                                icon: Icon((isVisible1)
-                                    ? Icons.remove_red_eye_outlined
-                                    : Icons.visibility_off_rounded),
+                                icon: (isVisible1)
+                                    ? const Icon(
+                                        Icons.remove_red_eye_outlined,
+                                      )
+                                    : const Icon(
+                                        Icons.visibility_off_rounded,
+                                        color: AppColors.purple,
+                                      ),
                               ),
                               hintText: 'Password',
                               hintStyle: getBodyStyle(color: AppColors.grey),
@@ -88,17 +93,23 @@ class _ResetPasswordViewState extends State<ResetPasswordView> {
                           ),
                           const Gap(30),
                           TextFormField(
-                            style: getBodyStyle(fontSize: 20),
+                            style: getBodyStyle(),
                             decoration: InputDecoration(
                               suffixIcon: IconButton(
-                                  onPressed: () {
-                                    setState(() {
-                                      isVisible2 = !isVisible2;
-                                    });
-                                  },
-                                  icon: Icon((isVisible2)
-                                      ? Icons.remove_red_eye_outlined
-                                      : Icons.visibility_off_rounded)),
+                                onPressed: () {
+                                  setState(() {
+                                    isVisible2 = !isVisible2;
+                                  });
+                                },
+                                icon: isVisible2
+                                    ? const Icon(
+                                        Icons.remove_red_eye_outlined,
+                                      )
+                                    : const Icon(
+                                        Icons.visibility_off_rounded,
+                                        color: AppColors.purple,
+                                      ),
+                              ),
                               hintText: 'Password Confirmation',
                               hintStyle: getBodyStyle(color: AppColors.grey),
                             ),
@@ -112,14 +123,14 @@ class _ResetPasswordViewState extends State<ResetPasswordView> {
                             obscureText: isVisible2,
                             textInputAction: TextInputAction.done,
                           ),
-                          const Gap(70),
+                          const Gap(25),
                           CustomElevatedButton(
                             onPressed: () {
                               if (formKey.currentState!.validate()) {
-                                cubit.resetPassword();
+                                cubit.resetPassword(verifyCode: widget.verify_code);
                               }
                             },
-                            width: 300,
+                            width: 250,
                             child: (state is ResetPasswordLoadingState)
                                 ? const CircularProgressIndicator(
                                     color: AppColors.white,

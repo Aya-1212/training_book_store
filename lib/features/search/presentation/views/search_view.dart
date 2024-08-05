@@ -6,15 +6,25 @@ import 'package:training_book_store/core/utils/text_style.dart';
 import 'package:training_book_store/core/widgets/custom_elevated.dart';
 import 'package:training_book_store/features/search/presentation/view_model/search_cubit.dart';
 import 'package:training_book_store/features/search/presentation/view_model/search_states.dart';
-import 'package:training_book_store/features/search/presentation/views/filtration_products.dart';
-import 'package:training_book_store/features/search/presentation/views/search_all_products.dart';
-import 'package:training_book_store/features/search/presentation/views/search_for_product.dart';
+import 'package:training_book_store/features/search/presentation/views/search_for_product_lists.dart';
 
 // ignore: must_be_immutable
-class SearchView extends StatelessWidget {
-  SearchView({super.key});
+class SearchView extends StatefulWidget {
+  const SearchView({super.key});
+
+  @override
+  State<SearchView> createState() => _SearchViewState();
+}
+
+class _SearchViewState extends State<SearchView> {
+  @override
+  void initState() {
+    search.text = "";
+    super.initState();
+  }
 
   var search = TextEditingController();
+
   var formKey = GlobalKey<FormState>();
 
   @override
@@ -144,61 +154,64 @@ class SearchView extends StatelessWidget {
                     ],
                   ),
                   const Gap(20),
-                  (state is SearchForProductSuccessState)
-                      ? SearchForSpecificproducts(
-                          searchProducts: cubit.searchProducts!,
+                  (state is SearchForProductSuccessState &&
+                          cubit.searchProducts!.data!.products!.isNotEmpty)
+                      ? SearchForProductsList(
+                          productLists: cubit.searchProducts!,
                         )
                       : (state is SearchFiltrationSuccessState &&
                               cubit.filterProduct!.data!.products!.isNotEmpty)
-                          ? FiltrationProductsView(
-                              filterProducts: cubit.filterProduct!,
+                          ? SearchForProductsList(
+                              productLists: cubit.filterProduct!,
                             )
-                          : (state is SearchFiltrationSuccessState &&
-                                  cubit.filterProduct!.data!.products!.isEmpty)
-                              ? Center(
-                                  child: Container(
-                                    height: 200,
-                                    width: double.infinity,
-                                    margin: const EdgeInsets.all(10),
-                                    padding: const EdgeInsets.all(5),
-                                    decoration: BoxDecoration(
-                                      color: AppColors.white,
-                                      boxShadow: const [
-                                        BoxShadow(
-                                            color: AppColors.grey,
-                                            blurRadius: 10,
-                                            offset: Offset(5, 5)),
-                                      ],
-                                      border: Border.all(
-                                          color: AppColors.purple, width: 2.5),
-                                      borderRadius: const BorderRadius.all(
-                                          Radius.circular(5)),
+                          : (state is SearchForProductSuccessState &&
+                                      cubit.searchProducts!.data!.products!
+                                          .isEmpty ||
+                                  state is SearchFiltrationSuccessState &&
+                                      cubit.filterProduct!.data!.products!
+                                          .isEmpty)
+                              ? Container(
+                                height: 200,
+                                width: double.infinity,
+                                margin: const EdgeInsets.all(10),
+                                padding: const EdgeInsets.all(5),
+                                decoration: BoxDecoration(
+                                  color: AppColors.white,
+                                  boxShadow: const [
+                                    BoxShadow(
+                                        color: AppColors.grey,
+                                        blurRadius: 10,
+                                        offset: Offset(5, 5)),
+                                  ],
+                                  border: Border.all(
+                                      color: AppColors.purple, width: 2.5),
+                                  borderRadius: const BorderRadius.all(
+                                      Radius.circular(5)),
+                                ),
+                                child: Column(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.center,
+                                  children: [
+                                    const Icon(
+                                      Icons.error_outline,
+                                      size: 50,
+                                      color: AppColors.purple,
                                     ),
-                                    child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        const Icon(
-                                          Icons.error_outline,
-                                          size: 50,
-                                          color: AppColors.purple,
-                                        ),
-                                        const Gap(25),
-                                        Text(
-                                          'There is no result',
-                                          style: getTitleStyle(),
-                                        ),
-                                        const Gap(10),
-                                        Text(
-                                          'Search again',
-                                          style: getTitleStyle(),
-                                        ),
-                                      ],
+                                    const Gap(25),
+                                    Text(
+                                      'There is no result',
+                                      style: getTitleStyle(),
                                     ),
-                                  ),
-                                )
-                              : SearchAllproducts(
-                                  allProducts: cubit.allProducts!),
+                                    const Gap(10),
+                                    Text(
+                                      'Search again',
+                                      style: getTitleStyle(),
+                                    ),
+                                  ],
+                                ),
+                              )
+                              : SearchForProductsList(
+                                  productLists: cubit.allProducts!),
                 ],
               ),
             ),
@@ -410,5 +423,4 @@ class SearchView extends StatelessWidget {
       },
     );
   }
-//end
 }
