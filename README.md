@@ -39,8 +39,8 @@ This Flutter project aims to develop a mobile application that provides a seamle
 
 
   #####   Search
-
 <div>
+  <image src="https://github.com/Aya-1212/training_book_store/blob/main/BookStore_screenshots/Screenshot_1722899310.png" height = 500>
   <image src="https://github.com/Aya-1212/training_book_store/blob/main/BookStore_screenshots/Screenshot_1722899319.png" height = 500>
  <div>
 
