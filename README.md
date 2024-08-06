@@ -20,3 +20,11 @@ This Flutter project aims to develop a mobile application that provides a seamle
 - Testing: Implement unit and integration tests to ensure code quality and reliability.
 
 ##### The app offers a seamless and enjoyable book shopping experience. Whether you're a seasoned reader or just starting your literary journey, you'll find something to love.
+#####   Authentication
+
+<div>
+  <image src="https://github.com/Aya-1212/training_book_store/blob/main/BookStore_screenshots/Screenshot_1722899494.png" height = 500>
+  <image src="https://github.com/Aya-1212/training_book_store/blob/main/BookStore_screenshots/Screenshot_1722899498.png" height = 500>
+  <image src="https://github.com/Aya-1212/training_book_store/blob/main/BookStore_screenshots/Screenshot_1722899494.png" height = 500>
+
+ <div>
