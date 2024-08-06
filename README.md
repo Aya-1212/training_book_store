@@ -21,10 +21,46 @@ This Flutter project aims to develop a mobile application that provides a seamle
 
 ##### The app offers a seamless and enjoyable book shopping experience. Whether you're a seasoned reader or just starting your literary journey, you'll find something to love.
 #####   Authentication
-
 <div>
+  <image src="https://github.com/Aya-1212/training_book_store/blob/main/BookStore_screenshots/Screenshot_1722899486.png" height = 500> 
   <image src="https://github.com/Aya-1212/training_book_store/blob/main/BookStore_screenshots/Screenshot_1722899494.png" height = 500>
   <image src="https://github.com/Aya-1212/training_book_store/blob/main/BookStore_screenshots/Screenshot_1722899498.png" height = 500>
-  <image src="https://github.com/Aya-1212/training_book_store/blob/main/BookStore_screenshots/Screenshot_1722899494.png" height = 500>
-
+  <image src="https://github.com/Aya-1212/training_book_store/blob/main/BookStore_screenshots/Screenshot_1722899503.png" height = 500>
  <div>
+
+ #####   Home
+
+<div>
+  <image src="https://github.com/Aya-1212/training_book_store/blob/main/BookStore_screenshots/Screenshot_1722899279.png" height = 500>
+  <image src="https://github.com/Aya-1212/training_book_store/blob/main/BookStore_screenshots/Screenshot_1722899290.png" height = 500>
+  <image src="https://github.com/Aya-1212/training_book_store/blob/main/BookStore_screenshots/Screenshot_1722899303.png" height = 500>
+  <image src="https://github.com/Aya-1212/training_book_store/blob/main/BookStore_screenshots/Screenshot_1722899294.png" height = 500>
+ <div>
+
+
+  #####   Search
+
+<div>
+  <image src="https://github.com/Aya-1212/training_book_store/blob/main/BookStore_screenshots/Screenshot_1722899319.png" height = 500>
+ <div>
+
+  #####   wishList
+
+<div>
+  <image src="https://github.com/Aya-1212/training_book_store/blob/main/BookStore_screenshots/Screenshot_1722899325.png" height = 500>
+ <div>
+   
+  #####  Cart & Checkout 
+<div>
+   <image src="https://github.com/Aya-1212/training_book_store/blob/main/BookStore_screenshots/Screenshot_1722899332.png" height = 500>
+    <image src="https://github.com/Aya-1212/training_book_store/blob/main/BookStore_screenshots/Screenshot_1722899412.png" height = 500>
+   <image src="https://github.com/Aya-1212/training_book_store/blob/main/BookStore_screenshots/Screenshot_1722899447.png" height = 500>
+
+<div>
+
+  #####   Profile 
+<div>
+   <image src="https://github.com/Aya-1212/training_book_store/blob/main/BookStore_screenshots/Screenshot_1722899453.png" height = 500>
+    <image src="https://github.com/Aya-1212/training_book_store/blob/main/BookStore_screenshots/Screenshot_1722899462.png" height = 500>
+
+<div>
