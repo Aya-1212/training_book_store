@@ -16,8 +16,7 @@ This Flutter project aims to develop a mobile application that provides a seamle
 - Flutter Framework: Build the user interface and app logic using Flutter for cross-platform compatibility.
 - API Integration: Consume a RESTful API to retrieve book data, user information, and order details.
 - State Management: Employ a suitable state management solution (Cubit) to manage app state effectively.
-- UI/UX Design: Create an intuitive and visually appealing user interface following modern design principles.
-- Testing: Implement unit and integration tests to ensure code quality and reliability.
+- UI/UX Design: Create an intuitive and visually appealing user interface following modern design principles. 
 
 ##### The app offers a seamless and enjoyable book shopping experience. Whether you're a seasoned reader or just starting your literary journey, you'll find something to love.
 #####   Authentication
